@@ -8,22 +8,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Colors pulled from her photos
-        sky: {
-          900: '#0C4A6E', // Deep mountain blue
-        },
-        nature: {
-          100: '#ECFDF5', // Very light mint background
-          800: '#065F46', // Deep forest green
-        },
-        gold: {
-          500: '#F59E0B', // Vibrant sun accent
-        }
+        'kenya-green': '#2F5233', // Lush forest green
+        'kenya-gold': '#FFB52E',  // Sun/Savannah gold
+        'kenya-sand': '#F9F4EF',  // Soft background paper color
+        'kenya-clay': '#B85042',  // Red earth accent
       },
       fontFamily: {
-        serif: ['var(--font-serif)', 'serif'],
         sans: ['var(--font-sans)', 'sans-serif'],
+        serif: ['var(--font-serif)', 'serif'],
       },
+      backgroundImage: {
+        'hero-pattern': "url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=2071')", // Mt Kenya feel
+      }
     },
   },
   plugins: [],
