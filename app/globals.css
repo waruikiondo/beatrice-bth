@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 26, 26, 26;
+  --foreground-rgb: 12, 74, 110; /* Deep sky blue text for a softer look than black */
   --background-rgb: 255, 255, 255;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
-  overflow-x: hidden; /* Prevents side-scrolling glitches */
+  overflow-x: hidden;
 }
 
-/* Smooth Scrolling */
+/* Ensure smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
