@@ -3,29 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 28, 25, 23;
+  --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #1a1a1a;
   background: white;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar for a premium feel */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+/* Elegant serif font for headlines */
+h1, h2, h3, h4, .serif {
+  font-family: 'Times New Roman', Times, serif; /* We will use a better font in the TSX file */
 }
