@@ -3,18 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 26, 26, 26;
+  --background-rgb: 255, 255, 255;
 }
 
 body {
-  color: #1a1a1a;
-  background: white;
-  -webkit-font-smoothing: antialiased;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  overflow-x: hidden; /* Prevents side-scrolling glitches */
 }
 
-/* Elegant serif font for headlines */
-h1, h2, h3, h4, .serif {
-  font-family: 'Times New Roman', Times, serif; /* We will use a better font in the TSX file */
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }

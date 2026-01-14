@@ -2,21 +2,21 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}" // Safety net in case src folder exists
   ],
   theme: {
     extend: {
       colors: {
-        'bth-blue': '#005f73',
-        'bth-green': '#0a9396',
-        'bth-cream': '#e9d8a6',
+        'bth-black': '#1a1a1a',
+        'bth-gold': '#C5A059',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
-        sans: ['"Montserrat"', 'sans-serif'],
-      }
+        serif: ['var(--font-serif)', 'serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
+      },
     },
   },
   plugins: [],

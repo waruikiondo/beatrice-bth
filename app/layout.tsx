@@ -2,8 +2,18 @@ import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], variable: '--font-serif' });
-const montserrat = Montserrat({ subsets: ["latin"], weight: ["300", "400", "600"], variable: '--font-sans' });
+// Load the "Baller" fonts
+const playfair = Playfair_Display({ 
+  subsets: ["latin"], 
+  variable: '--font-serif',
+  display: 'swap',
+});
+
+const montserrat = Montserrat({ 
+  subsets: ["latin"], 
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Beatrice Onyango | Beyond The Horizon",
@@ -17,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${montserrat.variable} font-sans`}>{children}</body>
+      <body className={`${playfair.variable} ${montserrat.variable} font-sans`}>
+        {children}
+      </body>
     </html>
   );
 }

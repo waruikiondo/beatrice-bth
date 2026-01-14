@@ -1,146 +1,182 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Play, Mic } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, Play, Instagram, Twitter, Linkedin, ArrowRight, MapPin } from "lucide-react";
 
-// Data
+// --- Real Data ---
 const POSTS = [
   {
     title: "Mt. Kilimanjaro",
     category: "Expedition",
-    desc: "The roof of Africa. 5,895m of intensity and beauty via the Machame route.",
-    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/summit-board.jpeg"
+    excerpt: "The roof of Africa. 5,895m of intensity and beauty via the Machame route.",
+    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/summit-board.jpeg",
+    link: "https://onyangobeatrice.com/2023/03/28/mt-kilimanjaro/"
   },
   {
     title: "What to Pack",
-    category: "Guide",
-    desc: "Don't overpack. A curated guide on the essentials for the trail.",
-    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/img_0324-1.jpeg?strip=info&w=2000"
+    category: "Essential Guide",
+    excerpt: "Don't overpack. A curated guide on the essentials for the trail.",
+    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/img_0324-1.jpeg?strip=info&w=2000",
+    link: "https://onyangobeatrice.com/2023/03/11/what-to-pack/"
   },
   {
     title: "Why We Hike",
     category: "Philosophy",
-    desc: "Exploring the deep reasons behind the trek and the silence of the hills.",
-    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender-5.jpeg?strip=info&w=2000"
+    excerpt: "Exploring the deep reasons behind the trek and the silence of the hills.",
+    img: "https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender-5.jpeg?strip=info&w=2000",
+    link: "https://onyangobeatrice.com/2023/03/11/why-do-you-hike/"
   }
 ];
 
 export default function Home() {
-  return (
-    <main className="bg-white min-h-screen">
-      
-      {/* 1. HERO SECTION - IMMERSIVE */}
-      <section className="relative h-screen w-full overflow-hidden">
-        {/* Background Image */}
-        <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender.jpeg?w=1024')" }}
-        >
-            <div className="absolute inset-0 bg-black/30"></div> {/* Slight dark tint for text pop */}
-        </div>
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end start"],
+  });
 
-        {/* Content */}
-        <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-24 text-white">
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
+
+  return (
+    <main className="bg-white text-slate-900 selection:bg-yellow-200">
+      
+      {/* 1. HERO SECTION (Parallax) */}
+      <section ref={targetRef} className="relative h-screen w-full overflow-hidden">
+        <motion.div 
+          style={{ scale, opacity, y }}
+          className="absolute inset-0 bg-cover bg-center"
+        >
+            <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: "url('https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender.jpeg?w=1024')" }}
+            />
+            <div className="absolute inset-0 bg-black/20" /> {/* Subtle tint */}
+        </motion.div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-6">
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, delay: 0.2 }}
             >
-                <span className="bg-yellow-500 text-black font-bold px-3 py-1 text-xs uppercase tracking-widest rounded-sm mb-4 inline-block">
-                    New Episode Out Now
-                </span>
-                <h1 className="font-serif text-6xl md:text-8xl font-bold leading-tight mb-6 drop-shadow-lg">
-                    Beyond <br/> The Horizon
+                <div className="mb-6 flex items-center justify-center gap-2 text-xs font-bold tracking-[0.3em] uppercase opacity-80">
+                    <span className="w-8 h-[1px] bg-white"></span>
+                    Est. 2023 • Kenya
+                    <span className="w-8 h-[1px] bg-white"></span>
+                </div>
+                <h1 className="font-serif text-7xl md:text-9xl leading-[0.9] mb-8">
+                    Beyond <br/> <span className="italic font-light">The Horizon</span>
                 </h1>
-                <p className="max-w-md text-lg md:text-xl font-light opacity-90 mb-8 border-l-4 border-yellow-500 pl-4">
-                    Curated hiking stories, trail guides, and the relentless pursuit of the summit.
-                </p>
-                
-                <button className="bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-yellow-500 transition-colors flex items-center gap-3">
-                    <Play size={18} fill="black" /> Listen to Podcast
-                </button>
+                <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    className="group bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs flex items-center gap-3 hover:bg-white hover:text-black transition-all"
+                >
+                    <Play size={14} className="fill-current" /> Start Listening
+                </motion.button>
             </motion.div>
         </div>
       </section>
 
-      {/* 2. INTRO SECTION - CLEAN & POPPY */}
-      <section className="py-20 px-6 md:px-24 bg-slate-50">
-        <div className="flex flex-col md:flex-row gap-12 items-center">
+      {/* 2. MAGAZINE INTRO */}
+      <section className="relative z-20 bg-white py-24 px-6 md:px-24 -mt-20 rounded-t-[3rem]">
+        <div className="flex flex-col md:flex-row gap-16 items-center">
             <div className="md:w-1/2">
-                <img 
-                    src="https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender-4.jpeg?strip=info&w=2000" 
-                    className="rounded-lg shadow-2xl w-full object-cover h-[500px]"
-                />
-            </div>
-            <div className="md:w-1/2 space-y-6">
-                <div className="flex items-center gap-2 text-blue-600 font-bold uppercase tracking-widest text-sm">
-                    <Mic size={18} /> The Host
+                <div className="relative">
+                    <img 
+                        src="https://onyangobeatrice.com/wp-content/uploads/2023/03/fullsizerender-4.jpeg?strip=info&w=2000" 
+                        className="rounded-lg w-full object-cover h-[600px] grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
+                    />
+                    <div className="absolute -bottom-6 -right-6 bg-yellow-400 p-8 rounded-full shadow-xl hidden md:block">
+                        <ArrowRight size={32} className="text-black -rotate-45" />
+                    </div>
                 </div>
-                <h2 className="font-serif text-5xl text-slate-900 leading-tight">
-                    "We share unique stories and wisdom gleaned from the wild."
+            </div>
+            <div className="md:w-1/2 space-y-8">
+                <h2 className="font-serif text-5xl md:text-6xl leading-tight">
+                    "The climb is tough,<br/> but the view is <span className="text-yellow-600 italic">worth it.</span>"
                 </h2>
-                <p className="text-slate-600 leading-relaxed text-lg">
-                    Whether you are a beginner looking for your first trail or an experienced adventurer seeking the next peak, BTH brings you the unfiltered reality of the climb.
+                <p className="text-slate-500 text-lg leading-relaxed font-light">
+                    Whether you are a beginner looking for your first trail or an experienced adventurer seeking the next peak, BTH brings you unique stories and wisdom gleaned from the wild.
                 </p>
-                <a href="#" className="inline-flex items-center gap-2 text-slate-900 font-bold border-b-2 border-yellow-500 pb-1 hover:text-blue-600 transition-colors">
-                    Read Biography <ArrowRight size={18} />
+                
+                <div className="grid grid-cols-2 gap-8 pt-8 border-t border-slate-100">
+                    <div>
+                        <h4 className="font-bold text-3xl font-serif">5.8k</h4>
+                        <p className="text-xs uppercase tracking-widest text-slate-400 mt-1">Meters Climbed</p>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-3xl font-serif">40+</h4>
+                        <p className="text-xs uppercase tracking-widest text-slate-400 mt-1">Episodes Aired</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* 3. LATEST STORIES (Horizontal Scroll Feel) */}
+      <section className="bg-slate-50 py-32 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-end mb-16 px-4">
+                <h3 className="font-serif text-5xl md:text-7xl text-slate-900 opacity-90">
+                    Latest <br/> <span className="italic text-slate-400">Expeditions</span>
+                </h3>
+                <a href="#" className="hidden md:flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:text-yellow-600 transition-colors">
+                    View Archive <ArrowUpRight size={18} />
                 </a>
             </div>
-        </div>
-      </section>
 
-      {/* 3. LATEST ADVENTURES - GRID */}
-      <section className="py-24 px-6 md:px-24 bg-white">
-        <div className="flex justify-between items-end mb-12">
-            <div>
-                <span className="text-blue-600 font-bold uppercase tracking-widest text-sm">Journal</span>
-                <h3 className="font-serif text-5xl mt-2 text-slate-900">Latest Adventures</h3>
-            </div>
-            <button className="hidden md:block border border-slate-300 px-6 py-2 rounded-full text-sm uppercase font-bold hover:bg-slate-900 hover:text-white transition-colors">
-                View All
-            </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {POSTS.map((post, i) => (
-                <motion.div 
-                    key={i}
-                    whileHover={{ y: -10 }}
-                    className="group cursor-pointer"
-                >
-                    <div className="overflow-hidden rounded-xl h-80 mb-6 relative shadow-lg">
-                        <img 
-                            src={post.img} 
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold uppercase rounded-sm">
-                            {post.category}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {POSTS.map((post, i) => (
+                    <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.2 }}
+                        className="group relative cursor-pointer"
+                    >
+                        <div className="overflow-hidden h-[450px] mb-6 relative">
+                            <img 
+                                src={post.img} 
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500" />
                         </div>
-                    </div>
-                    <h4 className="font-serif text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
-                        {post.title}
-                    </h4>
-                    <p className="text-slate-500 leading-relaxed">
-                        {post.desc}
-                    </p>
-                </motion.div>
-            ))}
+                        <div className="flex flex-col gap-3 px-2">
+                            <span className="text-yellow-600 text-xs font-bold uppercase tracking-widest">{post.category}</span>
+                            <h4 className="font-serif text-3xl leading-none group-hover:underline underline-offset-4 decoration-1">{post.title}</h4>
+                            <p className="text-slate-500 text-sm leading-relaxed">{post.excerpt}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
         </div>
       </section>
 
-      {/* 4. NEWSLETTER - VIBRANT */}
-      <section className="py-24 bg-blue-900 text-white text-center px-6">
-        <h2 className="font-serif text-4xl md:text-6xl mb-6">Join the Adventure</h2>
-        <p className="opacity-80 mb-8 max-w-lg mx-auto">Get the "What to Pack" guide and new episode alerts sent to your inbox.</p>
-        <div className="flex justify-center gap-2 max-w-md mx-auto">
-            <input className="px-6 py-4 rounded-l-full w-full text-black focus:outline-none" placeholder="Email Address" />
-            <button className="bg-yellow-500 text-black font-bold px-8 py-4 rounded-r-full uppercase tracking-widest hover:bg-yellow-400">
-                Join
-            </button>
+      {/* 4. FOOTER (Minimalist) */}
+      <footer className="bg-[#111] text-white py-20 px-6 md:px-12 border-t border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12 max-w-7xl mx-auto">
+          <div>
+            <h2 className="text-4xl font-serif mb-6">BTH.</h2>
+            <div className="flex gap-6 text-slate-400">
+                <Instagram className="hover:text-white cursor-pointer transition-colors" />
+                <Twitter className="hover:text-white cursor-pointer transition-colors" />
+                <Linkedin className="hover:text-white cursor-pointer transition-colors" />
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-slate-500 text-sm mb-4">Subscribe to the newsletter</p>
+            <div className="flex border-b border-white/20 pb-2">
+                <input type="email" placeholder="Email Address" className="bg-transparent focus:outline-none w-64 text-white placeholder:text-slate-700" />
+                <button className="text-xs font-bold uppercase tracking-widest hover:text-yellow-500">Submit</button>
+            </div>
+          </div>
         </div>
-      </section>
-
+      </footer>
     </main>
   );
 }
